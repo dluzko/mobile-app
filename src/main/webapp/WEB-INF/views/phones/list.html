@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>All phones</title>
+  <style>
+        body {
+        background: #87CEFA;
+        }
+  </style>
+</head>
+<body>
+
+<div th:each="smartphone : ${phones}">
+  <a th:href="@{/phones/{id}(id=${smartphone.getId()})}"
+     th:text="${smartphone.getName() + ', ' + smartphone.getYearOfRelease()}">smartphone</a>
+</div>
+
+<br/>
+<hr/>
+
+<a href="/mobile-app/phones/new">Create new smartphone</a>
+
+</body>
+</html>

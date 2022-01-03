@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New smartphone</title>
+    <style>
+        body {
+        background: #F0E68C;
+        }
+    </style>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/phones}" th:object="${smartphone}">
+    <label for="name">Enter name: </label>
+    <input type="text" th:field="*{name}" id="name"/>
+    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+    <br/>
+    <label for="yearOfRelease">Enter year of release: </label>
+    <input type="text" th:field="*{yearOfRelease}" id="yearOfRelease"/>
+    <div style="color:red" th:if="${#fields.hasErrors('yearOfRelease')}" th:errors="*{yearOfRelease}">Year Of Release Error</div>
+    <br/>
+    <label for="displayWidthInches">Enter display width: </label>
+    <input type="text" th:field="*{displayWidthInches}" id="displayWidthInches"/>
+    <div style="color:red" th:if="${#fields.hasErrors('displayWidthInches')}" th:errors="*{displayWidthInches}">Display Width Error</div>
+    <br/>
+    <input type="submit" value="Create!"/>
+</form>
+
+</body>
+</html>
