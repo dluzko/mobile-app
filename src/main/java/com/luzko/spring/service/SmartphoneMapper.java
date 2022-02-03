@@ -1,4 +1,4 @@
-package com.luzko.spring.dao;
+package com.luzko.spring.service;
 
 import com.luzko.spring.models.Smartphone;
 import org.springframework.jdbc.core.RowMapper;
@@ -17,8 +17,8 @@ public class SmartphoneMapper implements RowMapper<Smartphone> {
         smartphone.setYearOfRelease(resultSet.getInt("yearOfRelease"));
         smartphone.setDisplayWidthInches(resultSet.getDouble("displayWidthInches"));
 
-        if (smartphone.getId() > SmartphoneDAO.SMARTPHONE_COUNT) {
-            SmartphoneDAO.SMARTPHONE_COUNT = smartphone.getId();
+        if (smartphone.getId() > SmartphoneService.SMARTPHONE_COUNT) {
+            SmartphoneService.SMARTPHONE_COUNT = smartphone.getId();
         }
 
         return smartphone;
