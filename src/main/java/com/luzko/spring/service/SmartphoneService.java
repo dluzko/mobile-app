@@ -1,19 +1,19 @@
-package com.luzko.spring.dao;
+package com.luzko.spring.service;
 
 import com.luzko.spring.models.Smartphone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
-public class SmartphoneDAO {
+@Service
+public class SmartphoneService implements SmartphoneServiceInterface {
 
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public SmartphoneDAO(JdbcTemplate jdbcTemplate) {
+    public SmartphoneService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -33,13 +33,23 @@ public class SmartphoneDAO {
                 smartphone.getYearOfRelease(), smartphone.getDisplayWidthInches());
     }
 
-    public void update(int id, Smartphone updatedSmartphone) {
-        jdbcTemplate.update("UPDATE Smartphone SET name=?, yearOfRelease=?, displayWidthInches=? WHERE id=?",
+    public boolean update(int id, Smartphone updatedSmartphone) {
+        if (jdbcTemplate.update("UPDATE Smartphone SET name=?, yearOfRelease=?, displayWidthInches=? WHERE id=?",
                 updatedSmartphone.getName(), updatedSmartphone.getYearOfRelease(),
-                updatedSmartphone.getDisplayWidthInches(), id);
+                updatedSmartphone.getDisplayWidthInches(), id) > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
-    public void delete(int id) {
-        jdbcTemplate.update("DELETE FROM Smartphone WHERE id=?", id);
+    public boolean delete(int id) {
+        if (jdbcTemplate.update("DELETE FROM Smartphone WHERE id=?", id) > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }

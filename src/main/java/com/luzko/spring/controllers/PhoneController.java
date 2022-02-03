@@ -1,6 +1,6 @@
 package com.luzko.spring.controllers;
 
-import com.luzko.spring.dao.SmartphoneDAO;
+import com.luzko.spring.service.SmartphoneService;
 import com.luzko.spring.models.Smartphone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,22 +13,22 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/phones")
 public class PhoneController {
-    private final SmartphoneDAO smartphoneDAO;
+    private final SmartphoneService smartphoneService;
 
     @Autowired
-    public PhoneController(SmartphoneDAO smartphoneDAO) {
-        this.smartphoneDAO = smartphoneDAO;
+    public PhoneController(SmartphoneService smartphoneService) {
+        this.smartphoneService = smartphoneService;
     }
 
     @GetMapping()
     public String phones(Model model) {
-        model.addAttribute("phones", smartphoneDAO.index());
+        model.addAttribute("phones", smartphoneService.index());
         return "phones/list";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("smartphone", smartphoneDAO.show(id));
+        model.addAttribute("smartphone", smartphoneService.show(id));
         return "phones/show";
     }
 
@@ -42,13 +42,13 @@ public class PhoneController {
         if (bindingResult.hasErrors()) {
             return "phones/new";
         }
-        smartphoneDAO.save(smartphone);
+        smartphoneService.save(smartphone);
         return "redirect:/phones";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") int id, Model model) {
-        model.addAttribute("smartphone", smartphoneDAO.show(id));
+        model.addAttribute("smartphone", smartphoneService.show(id));
         return "phones/edit";
     }
 
@@ -59,13 +59,13 @@ public class PhoneController {
             return "phones/edit";
         }
 
-        smartphoneDAO.update(id, smartphone);
+        smartphoneService.update(id, smartphone);
         return "redirect:/phones";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        smartphoneDAO.delete(id);
+        smartphoneService.delete(id);
         return "redirect:/phones";
     }
 }
