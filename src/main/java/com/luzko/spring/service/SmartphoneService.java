@@ -11,20 +11,22 @@ import java.util.List;
 public class SmartphoneService implements SmartphoneServiceInterface {
 
     private final JdbcTemplate jdbcTemplate;
+    private final SmartphoneMapper smartphoneMapper;
 
     @Autowired
-    public SmartphoneService(JdbcTemplate jdbcTemplate) {
+    public SmartphoneService(JdbcTemplate jdbcTemplate, SmartphoneMapper smartphoneMapper) {
         this.jdbcTemplate = jdbcTemplate;
+        this.smartphoneMapper = smartphoneMapper;
     }
 
     static int SMARTPHONE_COUNT;
 
     public List<Smartphone> index() {
-        return jdbcTemplate.query("SELECT * FROM Smartphone", new SmartphoneMapper());
+        return jdbcTemplate.query("SELECT * FROM Smartphone", smartphoneMapper);
     }
 
     public Smartphone show(int id) {
-        return jdbcTemplate.query("SELECT * FROM Smartphone WHERE id=?", new SmartphoneMapper(), new Object[]{id})
+        return jdbcTemplate.query("SELECT * FROM Smartphone WHERE id=?", smartphoneMapper, new Object[]{id})
                 .stream().findAny().orElse(null);
     }
 
