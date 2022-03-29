@@ -3,6 +3,7 @@ package com.luzko.spring.models;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 public class Smartphone {
     private int id;
@@ -56,5 +57,28 @@ public class Smartphone {
 
     public void setDisplayWidthInches(double displayWidthInches) {
         this.displayWidthInches = displayWidthInches;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Smartphone that = (Smartphone) o;
+        return id == that.id && yearOfRelease == that.yearOfRelease && Double.compare(that.displayWidthInches, displayWidthInches) == 0 && Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, yearOfRelease, displayWidthInches);
+    }
+
+    @Override
+    public String toString() {
+        return "Smartphone{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", yearOfRelease=" + yearOfRelease +
+                ", displayWidthInches=" + displayWidthInches +
+                '}';
     }
 }
